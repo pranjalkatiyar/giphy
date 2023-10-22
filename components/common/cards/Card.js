@@ -7,8 +7,6 @@ import { ThemeContext } from "../../../context/ThemeContext";
 import { fetchGif } from "../../../features/download/download";
 import { Ionicons } from "@expo/vector-icons";
 import InfoModal from "../../Modal/InfoModal";
-
-import { downloadGif } from "../../../features/download/download";
 const CardWithFeatures = ({
   item,
   id,
@@ -48,6 +46,7 @@ const CardWithFeatures = ({
   const moreInformationButton = async () => {
     console.log("More Information pressed");
     setInfo(true);
+    console.log(info);
   };
 
   const pauseResumeButton = async () => {
@@ -56,6 +55,9 @@ const CardWithFeatures = ({
     setPause(!pause);
   };
 
+  pauseImage = {
+    uri: "https://cdn.pixabay.com/photo/2017/11/10/05/34/pause-2935459_1280.png",
+  };
   return (
     <View style={isDarkMode ? styles.lightCard : styles.darkCard}>
       <TouchableOpacity onPress={pauseResumeButton}>
@@ -87,7 +89,7 @@ const CardWithFeatures = ({
             color={isDarkMode ? "black" : "white"}
           />
         </TouchableOpacity>
-        <InfoModal item={item} info={info} setInfo={setInfo} />
+        {info && <InfoModal item={item} info={info} setInfo={setInfo} />}
       </View>
     </View>
   );

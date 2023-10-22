@@ -21,13 +21,14 @@ const Welcome = ({ searchTerm, handleClick, setSearchTerm }) => {
 
   const removeTerm = () => {
     setSearchTerm("");
+    setSearch("");
     console.log("searchTerm", searchTerm);
     setType("Trending");
     handleClick();
   };
 
   return (
-    <View style={{ backgroundColor: isDarkMode ? "white" : "black" }}>
+    <View style={{ backgroundColor: isDarkMode ? "white" : "#112B3C" }}>
       <View style={styles.searchContainer}>
         <View style={styles.searchWrapper}>
           <TextInput

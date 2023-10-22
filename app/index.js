@@ -12,6 +12,7 @@ import { useState, createContext, useContext } from "react";
 import { AntDesign } from "@expo/vector-icons";
 import { ThemeProvider } from "../context/ThemeContext";
 import ThemedButton from "../components/Theme/ThemeButton";
+import { StatusBar } from "react-native";
 import { ThemeContext } from "../context/ThemeContext";
 
 const Home = () => {
@@ -20,6 +21,7 @@ const Home = () => {
   const { isDarkMode, type, setType } = useContext(ThemeContext);
   return (
     <SafeAreaView>
+      <StatusBar animated={true} backgroundColor="#112B3C" hidden={false} />
       <Stack.Screen
         options={{
           headerStyle: {

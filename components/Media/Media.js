@@ -27,8 +27,10 @@ const Media = ({ searchTerm }) => {
 
   useEffect(() => {
     if (searchTerm !== "") {
+      setresult([]);
       setPage(1);
     } else {
+      setresult([]);
       setPage(1);
     }
 
@@ -53,8 +55,9 @@ const Media = ({ searchTerm }) => {
   return (
     <View
       style={{
-        backgroundColor: isDarkMode ? "white" : "#040D12",
+        backgroundColor: isDarkMode ? "white" : "#112B3C",
         height: "100%",
+        paddingTop: 10,
       }}
     >
       <FlatList
