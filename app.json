@@ -7,18 +7,30 @@
     "plugins": [
       "expo-router"
     ],
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "android": {
+      "package": "com.kirana_assessment",
+      "permissions": [
+        "WRITE_EXTERNAL_STORAGE",
+        "READ_EXTERNAL_STORAGE"
+      ]
+    },
     "name": "kirana_assessment",
     "slug": "kirana_assessment",
     "extra": {
       "fonts": [
         {
-          "asset": "assets/fonts/Roboto-Regular.ttf"
+          "asset": "asset/fonts/Roboto-Regular.ttf"
         },
         {
-          "asset": "assets/fonts/Roboto-Bold.ttf"
+          "asset": "asset/fonts/Roboto-Bold.ttf"
         },
         {
-          "asset": "assets/fonts/Roboto-Medium.ttf"
+          "asset": "asset/fonts/Roboto-Medium.ttf"
         }
       ]
     }

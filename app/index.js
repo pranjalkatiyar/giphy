@@ -8,14 +8,13 @@ import { SIZES } from "../constants";
 import { useRouter } from "expo-router";
 import Media from "../components/Media/Media";
 import React from "react";
-import { useState } from "react";
-
-const context = React.createContext("");
+import { useState, createContext, useContext } from "react";
+import { ThemeProvider } from "../context/ThemeContext";
+import ThemedButton from "../components/Theme/ThemeButton";
 
 const Home = () => {
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState("");
-
   return (
     <SafeAreaView>
       <Stack.Screen
@@ -25,24 +24,16 @@ const Home = () => {
           headerLeft: () => (
             <ScreenHeaderBtn name="menu" dimension="24" color="black" />
           ),
-          headerRight: () => (
-            <ScreenHeaderBtn name="menu" dimension="24" color="black" />
-          ),
+          headerRight: () => <ThemedButton />,
           headerTitle: "",
         }}
       />
-      <View
-        style={{
-          flex: 1,
-          padding: SIZES.medium,
-        }}
-      ></View>
+      <View></View>
       <Welcome
         searchTerm={searchTerm}
         handleClick={() => {
           console.log("clicked");
           console.log("ME ONLY", searchTerm);
-          // setSearchTerm("");
         }}
         setSearchTerm={setSearchTerm}
       />

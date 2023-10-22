@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Text } from "react-native";
 import {
   View,
@@ -11,14 +11,14 @@ import { FlatList } from "react-native-gesture-handler";
 import useFetch from "../../hook/useFetch";
 import Card from "../common/cards/Card";
 import { useRouter } from "expo-router";
+import { useContext } from "react";
+import { ThemeContext } from "../../context/ThemeContext";
 const Media = ({ searchTerm }) => {
-  // const router = useRouter();
-  // console.log("HEEEELLLO", searchTerm);
-  const { data, loading, error } = useFetch({
-    searchTerm,
-  });
-  console.log(data);
-  // const data = [
+  const { isDarkMode, setDarkMode, toggleTheme } = useContext(ThemeContext);
+  const [result, setresult] = React.useState([]);
+  const [loading, setLoading] = React.useState(true);
+  const [error, setError] = React.useState(null);
+  const [page, setPage] = React.useState(1);
   //   {
   //     images: {
   //       fixed_height: {
@@ -75,20 +75,31 @@ const Media = ({ searchTerm }) => {
   const feature1 = "Download";
   const feature2 = "Share";
 
+  useEffect(() => {
+    infiniteScroll(page);
+  }, []);
+
+  const infiniteScroll = async (page) => {
+    setPage(page + 1);
+    const { data, loading, error } = await useFetch({ searchTerm, page });
+    console.log(data);
+    setresult([...result, ...data]);
+    setLoading(loading);
+    setError(error);
+  };
+
   const onPressImage = () => {
     console.log("Image pressed");
   };
-
-  const onPressButton2 = () => {
-    console.log("Share pressed");
-  };
-
   return (
-    <View>
-      <Text>{data.title}</Text>
-
+    <View
+      style={{
+        backgroundColor: isDarkMode ? "white" : "black",
+        height: "100%",
+      }}
+    >
       <FlatList
-        data={data}
+        data={result}
         renderItem={({ item }) =>
           (
             <Card
@@ -100,11 +111,17 @@ const Media = ({ searchTerm }) => {
               feature1={feature1}
               feature2={feature2}
               onPressImage={onPressImage}
-              onPressButton2={onPressButton2}
             />
           ) || <Text>{JSON.stringify(item.images.fixed_height.url)}</Text>
         }
         keyExtractor={(item) => item.id}
+        onEndReachedThreshold={0}
+        onEndReached={() => {
+          console.log("End reached");
+          if (!loading) {
+            infiniteScroll();
+          }
+        }}
       />
     </View>
   );

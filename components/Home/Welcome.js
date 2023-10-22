@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { View, Image, Text, StyleSheet } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import { TouchableOpacity } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import styles from "./welcome.style";
+import { ThemeContext } from "../../context/ThemeContext";
 
 const Welcome = ({ searchTerm, handleClick, setSearchTerm }) => {
   const [search, setSearch] = useState("");
+  const { isDarkMode } = useContext(ThemeContext);
+  console.log("WELCOME", isDarkMode);
 
   const pressed = () => {
     setSearchTerm(search);
@@ -15,12 +18,7 @@ const Welcome = ({ searchTerm, handleClick, setSearchTerm }) => {
   };
 
   return (
-    <View>
-      {/* <View style={styles.container}>
-        <Text style={styles.userName}>Hello Adrian</Text>
-        <Text style={styles.welcomeMessage}>Find your perfect job</Text>
-      </View> */}
-
+    <View style={{ backgroundColor: isDarkMode ? "white" : "black" }}>
       <View style={styles.searchContainer}>
         <View style={styles.searchWrapper}>
           <TextInput
@@ -34,26 +32,6 @@ const Welcome = ({ searchTerm, handleClick, setSearchTerm }) => {
           <Feather name="search" size={24} color="black" />
         </TouchableOpacity>
       </View>
-
-      {/* <View style={styles.tabsContainer}>
-        <FlatList
-          data={jobTypes}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              style={styles.tab(activeJobType, item)}
-              onPress={() => {
-                setActiveJobType(item);
-                router.push(`/search/${item}`);
-              }}
-            >
-              <Text style={styles.tabText(activeJobType, item)}>{item}</Text>
-            </TouchableOpacity>
-          )}
-          keyExtractor={(item) => item}
-          contentContainerStyle={{ columnGap: SIZES.small }}
-          horizontal
-        />
-      </View> */}
     </View>
   );
 };

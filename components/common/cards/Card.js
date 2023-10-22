@@ -1,30 +1,17 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, Text, TouchableOpacity, Image, StyleSheet } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import * as FileSystem from "expo-file-system";
-import * as Sharing from "expo-sharing";
 import { Share } from "react-native";
+import { ThemeContext } from "../../../context/ThemeContext";
+import { fetchGif } from "../../../features/download/download";
+
 import { downloadGif } from "../../../features/download/download";
-import * as Permissions from "expo-permissions";
-import * as MediaLibrary from "expo-media-library";
 const CardWithFeatures = ({ id, imageSource, onPressImage }) => {
+  const { isDarkMode } = useContext(ThemeContext);
   const onPressButton1 = async () => {
-    const perm = await Permissions.askAsync(Permissions.MEDIA_LIBRARY);
-    if (perm.status != "granted") {
-      alert("Permission not granted");
-      return;
-    }
-    try {
-      const asset = await MediaLibrary.createAssetAsync(imageSource.uri);
-      const album = await MediaLibrary.getAlbumAsync("Download");
-      if (album == null) {
-        await MediaLibrary.createAlbumAsync("Download", assets, false);
-      } else {
-        await MediaLibrary.addAssetsToAlbumAsync([assets], album, false);
-      }
-    } catch (e) {
-      console.log(e);
-    }
+    console.log("Download pressed");
+    fetchGif(imageSource.uri);
   };
 
   const shareButton = async () => {
@@ -48,16 +35,24 @@ const CardWithFeatures = ({ id, imageSource, onPressImage }) => {
   };
 
   return (
-    <View style={styles.card}>
+    <View style={isDarkMode ? styles.lightCard : styles.darkCard}>
       <TouchableOpacity onPress={onPressImage}>
         <Image source={imageSource} style={styles.image} />
       </TouchableOpacity>
       <View style={styles.featuresContainer}>
         <TouchableOpacity onPress={onPressButton1} style={styles.featureButton}>
-          <Feather name="download" size={24} color="black" />
+          <Feather
+            name="download"
+            size={24}
+            color={isDarkMode ? "black" : "white"}
+          />
         </TouchableOpacity>
         <TouchableOpacity onPress={shareButton} style={styles.featureButton}>
-          <Feather name="share-2" size={24} color="black" />
+          <Feather
+            name="share-2"
+            size={24}
+            color={isDarkMode ? "black" : "white"}
+          />
         </TouchableOpacity>
       </View>
     </View>
@@ -65,9 +60,21 @@ const CardWithFeatures = ({ id, imageSource, onPressImage }) => {
 };
 
 const styles = StyleSheet.create({
-  card: {
+  lightCard: {
     backgroundColor: "white",
-    padding: 16,
+    borderRadius: 8,
+    margin: 16,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
+  },
+  darkCard: {
+    backgroundColor: "gray",
     borderRadius: 8,
     margin: 16,
     shadowColor: "#000",
@@ -81,7 +88,7 @@ const styles = StyleSheet.create({
   },
   image: {
     width: "100%",
-    height: 150, // Adjust the height as needed
+    height: 300, // Adjust the height as needed
     marginBottom: 8,
     borderRadius: 8,
   },
@@ -91,7 +98,6 @@ const styles = StyleSheet.create({
   },
   featureButton: {
     flex: 1,
-    // backgroundColor: "blue", // Adjust button styles as needed
     padding: 10,
     borderRadius: 5,
     alignItems: "center",

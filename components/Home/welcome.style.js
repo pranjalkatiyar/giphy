@@ -24,6 +24,15 @@ const styles = StyleSheet.create({
     marginTop: SIZES.large,
     height: 50,
   },
+  darksearchContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    marginTop: SIZES.large,
+    height: 50,
+    backgroundColor: "black",
+    color: "white",
+  },
   searchWrapper: {
     flex: 1,
     backgroundColor: COLORS.white,
