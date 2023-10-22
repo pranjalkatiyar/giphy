@@ -5,16 +5,25 @@ import { TouchableOpacity } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import styles from "./welcome.style";
 import { ThemeContext } from "../../context/ThemeContext";
+import { AntDesign } from "@expo/vector-icons";
 
 const Welcome = ({ searchTerm, handleClick, setSearchTerm }) => {
   const [search, setSearch] = useState("");
-  const { isDarkMode } = useContext(ThemeContext);
+  const { isDarkMode, type, setType } = useContext(ThemeContext);
   console.log("WELCOME", isDarkMode);
 
   const pressed = () => {
     setSearchTerm(search);
+    if (search != "") setType("Relevant Results");
+    else setType("Trending");
     handleClick();
-    setSearch("");
+  };
+
+  const removeTerm = () => {
+    setSearchTerm("");
+    console.log("searchTerm", searchTerm);
+    setType("Trending");
+    handleClick();
   };
 
   return (
@@ -30,6 +39,12 @@ const Welcome = ({ searchTerm, handleClick, setSearchTerm }) => {
         </View>
         <TouchableOpacity style={styles.searchBtn} onPress={pressed}>
           <Feather name="search" size={24} color="black" />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.searchBtn} onPress={removeTerm}>
+          <AntDesign name="close" size={24} color="black" />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.searchBtn} onPress={removeTerm}>
+          <Feather name="trending-up" size={24} color="black" />
         </TouchableOpacity>
       </View>
     </View>

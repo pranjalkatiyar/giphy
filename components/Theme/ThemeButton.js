@@ -17,9 +17,17 @@ const ThemedButton = () => {
     <View>
       <TouchableOpacity onPress={() => setDarkMode(!isDarkMode)}>
         {isDarkMode ? (
-          <Feather name="moon" size={24} color="black" />
+          <Feather
+            name="moon"
+            size={24}
+            color={isDarkMode ? "black" : "white"}
+          />
         ) : (
-          <Feather name="sun" size={24} color="black" />
+          <Feather
+            name="sun"
+            size={24}
+            color={isDarkMode ? "black" : "white"}
+          />
         )}
       </TouchableOpacity>
     </View>

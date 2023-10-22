@@ -9,17 +9,22 @@ import { useRouter } from "expo-router";
 import Media from "../components/Media/Media";
 import React from "react";
 import { useState, createContext, useContext } from "react";
+import { AntDesign } from "@expo/vector-icons";
 import { ThemeProvider } from "../context/ThemeContext";
 import ThemedButton from "../components/Theme/ThemeButton";
+import { ThemeContext } from "../context/ThemeContext";
 
 const Home = () => {
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState("");
+  const { isDarkMode, type, setType } = useContext(ThemeContext);
   return (
     <SafeAreaView>
       <Stack.Screen
         options={{
-          headerStyle: { backgroundColor: COLORS.lightWhite },
+          headerStyle: {
+            backgroundColor: isDarkMode ? COLORS.lightWhite : "black",
+          },
           headerShadowVisible: false,
           headerLeft: () => (
             <ScreenHeaderBtn name="menu" dimension="24" color="black" />

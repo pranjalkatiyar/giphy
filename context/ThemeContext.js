@@ -5,15 +5,10 @@ export const ThemeContext = createContext();
 
 export const ThemeProvider = ({ children }) => {
   const [isDarkMode, setDarkMode] = useState(false);
-
-  const toogleTheme = () => {
-    console.log("toogleTheme");
-    setDarkMode((prevMode) => !prevMode);
-    console.log(isDarkMode);
-  };
+  const [type, setType] = useState("trending");
 
   return (
-    <ThemeContext.Provider value={{ isDarkMode, setDarkMode, toogleTheme }}>
+    <ThemeContext.Provider value={{ isDarkMode, setDarkMode, setType, type }}>
       {children}
     </ThemeContext.Provider>
   );
